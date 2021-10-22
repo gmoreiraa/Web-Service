@@ -1,0 +1,96 @@
+html,
+body {
+  padding: 0;
+  margin: 0;
+  background-color: rgb(80, 77, 77);
+}
+
+h1 {
+  margin-top: 0;
+  font-size: 2.4em;
+  font-weight: normal;
+  display: inline-block;
+  color: rgb(255, 238, 238);
+}
+
+body {
+  font-family: "Roboto", sans-serif;
+  padding: 50px 10%;
+}
+
+button {
+  background-color: #046380;
+  color: rgb(255, 238, 238);
+  border: none;
+  padding: 10px 15px;
+  font-size: 12px;
+  font-family: "Roboto", sans-serif;
+  border-radius: 4px;
+  cursor: pointer;
+  outline: none;
+  box-shadow: 2px 2px 0 #034154;
+  margin-bottom: 10px;
+  margin-left: 18px;
+  transition: opacity 0.4s ease-out, transform 0.4s ease-out,
+    visibility 0.4s ease-out;
+  position: relative;
+  top: -10px;
+}
+
+button:hover {
+  background-color: #034f66;
+}
+
+button:active {
+  background-color: #034154;
+  box-shadow: none;
+  position: relative;
+  top: -8px;
+  left: 2px;
+}
+
+#hero-card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+  border-radius: 5px;
+  margin: 12em;
+  margin-top: 0em;
+}
+
+#hero-card:hover {
+  box-shadow: 0 2em 6em 0 rgba(0, 0, 0, 0.2);
+}
+
+.container {
+  padding: 2px 8px;
+}
+
+#hero-name {
+  font-size: 1.4em;
+  font-weight: bold;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  color: rgb(255, 238, 238);
+}
+
+#hero-publisher {
+  padding-left: 5px;
+  color: rgb(255, 238, 238);
+}
+
+img {
+  border-radius: 5px 5px 0 0;
+  height: 25em;
+  width: 6em;
+  margin-bottom: 0px;
+}
+
+#hero-first-appearance {
+  padding-left: 5px;
+  color: rgb(255, 238, 238);
+}
+
+#hero-occupation {
+  padding-left: 5px;
+  color: rgb(255, 238, 238);
+}
