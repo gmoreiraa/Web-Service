@@ -1,14 +1,15 @@
 from http.server import HTTPServer, BaseHTTPRequestHandler
 import json
+import re
 
-#open json file and give it to data variable as a dictionary
 with open("db.json") as data_file:
     data = json.load(data_file)
 
+with open("login.json") as data_file:
+    login = json.load(data_file)
 
-#Defining a HTTP request Handler class
+
 class ServiceHandler(BaseHTTPRequestHandler):
-    #sets basic headers for the server
     def _set_headers(self):
         self.send_header('Content-type', 'application/json')
         self.send_header('Access-Control-Allow-Origin', '*')
@@ -19,105 +20,123 @@ class ServiceHandler(BaseHTTPRequestHandler):
         self.end_headers()
 
     def _get_request_content(self):
-        #reads the length of the Headers
         length = int(self.headers['Content-Length'])
-        #reads the contents of the request
         content = self.rfile.read(length)
-        temp = str(content).strip('b\'')
-        return temp
+        req = str(content).strip('b\'')
+        return req
 
-######
-
-#LIST#
-######
 #GET Method Defination
 
     def do_GET(self):
+        has_number = re.compile('\d')
+        if self.path == '/users' or self.path == '/users/':
+            self.do_users()
+        elif has_number.search(self.path):
+            self.do_user()
+
+    def do_users(self):
         self.send_response(200)
-        #defining all the headers
         self._set_headers()
-        #prints all the keys and values of the json file
         self.wfile.write(json.dumps(data).encode())
 
-######
-#VIEW#
-######
-#VIEW method defination
+    def do_user(self):
+        id = self.path.split('/')
+        id = id[len(id) - 1]
 
-    def do_VIEW(self):
-        #dict var. for pretty print
-        display = {}
-        temp = self._get_request_content()
+        found = False
+        for user in range(len(data)):
+            if data[user]["id"] == id:
+                self.send_response(200)
+                self._set_headers()
+                self.wfile.write(json.dumps(data[user]).encode())
+                found = True
+                break
 
-        #check if the key is present in the dictionary
-        if temp in data:
-            display[temp] = data[temp]
-            #print the keys required from the json file
-            self.wfile.write(json.dumps(display).encode())
-            self.send_response(200)
-            self._set_headers()
-        else:
+        if not found:
             self.send_response(404)
             self._set_headers()
             error = "NOT FOUND!"
             self.wfile.write(bytes(error, 'utf-8'))
 
-########
-#CREATE#
-########
 #POST method defination
 
     def do_POST(self):
-        temp = self._get_request_content()
-        temp = json.loads(temp)["data"]
+        if self.path == '/users' or self.path == '/users/':
+            self.do_create()
+        elif self.path == '/login':
+            self.do_login()
+
+    def do_create(self):
+        req = self._get_request_content()
+        req = json.loads(req)["data"]
 
         index = int(data[len(data) - 1]["id"]) + 1
 
-        temp["id"] = str(index)
-        data.append(temp)
-        #write the changes to the json file
+        req["id"] = str(index)
+        data.append(req)
         with open("db.json", 'w+') as file_data:
             json.dump(data, file_data)
 
         self.send_response(200)
         self._set_headers()
-        self.wfile.write(json.dumps(temp).encode())
+        self.wfile.write(json.dumps(req).encode())
 
-########
-#UPDATE#
-########
+    def do_login(self):
+        req = self._get_request_content()
+        req = json.loads(req)["data"]
+
+        found = False
+        for user in range(len(data)):
+            if data[user]["email"] == req["email"] and data[user][
+                    "password"] == req["password"]:
+                self.send_response(200)
+                self._set_headers()
+                self.wfile.write(json.dumps(req).encode())
+                login.append(req)
+                with open("login.json", 'w+') as file_data:
+                    json.dump(login, file_data)
+                found = True
+                break
+
+        if not found:
+            self.send_response(404)
+            self._set_headers()
+            error = "NOT FOUND!"
+            self.wfile.write(bytes(error, 'utf-8'))
+
 #PUT method Defination
 
     def do_PUT(self):
         self.send_response(200)
         self._set_headers()
-        temp = self._get_request_content()
-        temp = json.loads(temp)["data"]
+        req = self._get_request_content()
+        req = json.loads(req)["data"]
 
         for user in range(len(data)):
-            if data[user]["id"] == temp["id"]:
-                data[user] = temp
-                #write the changes to the json file
+            if data[user]["id"] == req["id"]:
+                data[user] = req
                 with open("db.json", 'w+') as file_data:
                     json.dump(data, file_data)
-                self.wfile.write(json.dumps(temp).encode())
+                self.wfile.write(json.dumps(req).encode())
                 break
 
-########
-#DELETE#
-########
 #DELETE method defination
 
     def do_DELETE(self):
-        temp = self._get_request_content()
+        if self.path == '/users' or self.path == '/users/':
+            self.do_del()
+        elif self.path == '/logout':
+            self.do_logout()
+
+    def do_del(self):
+        req = self._get_request_content()
         found = False
         for user in range(len(data)):
-            if data[user]["id"] == temp:
+            if data[user]["id"] == req:
                 self.send_response(200)
                 self._set_headers()
                 self.wfile.write(json.dumps(data[user]).encode())
                 del data[user]
-                #write the changes to json file
                 with open("db.json", 'w+') as file_data:
                     json.dump(data, file_data)
                 found = True
@@ -129,9 +148,27 @@ class ServiceHandler(BaseHTTPRequestHandler):
             error = "NOT FOUND!"
             self.wfile.write(bytes(error, 'utf-8'))
 
-########
-#OPTIONS#
-########
+    def do_logout(self):
+        req = self._get_request_content().replace('"', '')
+
+        found = False
+        for user in range(len(login)):
+            if login[user]["email"] == req:
+                self.send_response(200)
+                self._set_headers()
+                self.wfile.write(json.dumps(login[user]).encode())
+                del login[user]
+                with open("login.json", 'w+') as file_data:
+                    json.dump(login, file_data)
+                found = True
+                break
+
+        if not found:
+            self.send_response(404)
+            self._set_headers()
+            error = "NOT FOUND!"
+            self.wfile.write(bytes(error, 'utf-8'))
+
 #OPTIONS method defination
 
     def do_OPTIONS(self):

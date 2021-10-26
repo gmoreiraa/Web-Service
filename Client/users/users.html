@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User List</title>
+    <link rel="stylesheet" href="./users.css" />
+    <link rel="stylesheet" href="../logout/logout.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;1,300&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body onload="get_base_url() ,get_infos(), check_login()">
+    <div class="topnav" id="topnav">
+      <h1>Lista de Usuários</h1>
+      <a class="active">Usuários</a>
+    </div>
+
+    <div class="users-list" id="users-list"></div>
+
+    <script src="../node_modules/axios/dist/axios.min.js"></script>
+    <script src="./users.js"></script>
+    <script src="../logout/logout.js"></script>
+    <script src="../login/check_login.js"></script>
+  </body>
+</html>
