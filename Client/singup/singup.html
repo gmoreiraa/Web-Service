@@ -5,8 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>User List</title>
-    <link rel="stylesheet" href="./login.css" />
     <link rel="stylesheet" href="../users/users.css" />
+    <link rel="stylesheet" href="../login/login.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -16,12 +16,47 @@
   </head>
   <body>
     <div class="topnav" id="topnav">
-      <h1>Login</h1>
-      <a href="../users/users.html">Voltar</a>
+      <h1>Criar Conta</h1>
+      <a href="../login/login.html">Voltar</a>
     </div>
 
     <div class="container">
-      <form id="login">
+      <form id="singup">
+        <div class="field">
+          <label for="name">Nome:</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            placeholder="Insira seu nome"
+          />
+          <small></small>
+        </div>
+        <div class="field">
+          <label for="rg">RG:</label>
+          <input type="text" id="rg" name="rg" placeholder="Insira seu RG" />
+          <small></small>
+        </div>
+        <div class="field">
+          <label for="matricula">Matricula:</label>
+          <input
+            type="text"
+            id="matricula"
+            name="matricula"
+            placeholder="Insira sua matrícula"
+          />
+          <small></small>
+        </div>
+        <div class="field">
+          <label for="address">Endereço:</label>
+          <input
+            type="text"
+            id="address"
+            name="address"
+            placeholder="Insira seu endereço"
+          />
+          <small></small>
+        </div>
         <div class="field">
           <label for="email">Email:</label>
           <input
@@ -48,17 +83,8 @@
       </form>
     </div>
 
-    <div class="actions">
-      <a class="auth_actions" href="../new_password/email.html"
-        >Esqueceu a senha?</a
-      >
-      <a id="singup" class="auth_actions" href="../singup/singup.html"
-        >Criar Conta</a
-      >
-    </div>
-
     <script src="../node_modules/axios/dist/axios.min.js"></script>
-    <script src="./login.js"></script>
-    <script src="./login_util.js"></script>
+    <script src="./singup.js"></script>
+    <script src="../login/login_util.js"></script>
   </body>
 </html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User List</title>
+    <link rel="stylesheet" href="../users/users.css" />
+    <link rel="stylesheet" href="../logout/logout.css" />
+    <link rel="stylesheet" href="../login/login.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;1,300&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body onload="get_user()">
+    <div class="topnav" id="topnav">
+      <h1>Perfil</h1>
+      <button class="logout" id="logout-btn" onclick="logout()">Sair</button>
+      <a class="active">Perfil</a>
+      <a href="../users/users.html">Usuários</a>
+    </div>
+
+    <div class="container">
+      <form id="update">
+        <div class="field">
+          <label for="name">Nome:</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            placeholder="Insira seu nome"
+          />
+          <small></small>
+        </div>
+        <div class="field">
+          <label for="rg">RG:</label>
+          <input type="text" id="rg" name="rg" placeholder="Insira seu RG" />
+          <small></small>
+        </div>
+        <div class="field">
+          <label for="matricula">Matricula:</label>
+          <input
+            type="text"
+            id="matricula"
+            name="matricula"
+            placeholder="Insira sua matrícula"
+          />
+          <small></small>
+        </div>
+        <div class="field">
+          <label for="address">Endereço:</label>
+          <input
+            type="text"
+            id="address"
+            name="address"
+            placeholder="Insira seu endereço"
+          />
+          <small></small>
+        </div>
+        <div class="field">
+          <label for="email">Email:</label>
+          <input
+            type="text"
+            id="email"
+            name="email"
+            placeholder="Insira seu email"
+          />
+          <small></small>
+        </div>
+        <div class="field">
+          <label for="password">Senha:</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Insira sua senha"
+          />
+          <small></small>
+        </div>
+        <div class="field">
+          <button type="submit" class="full">Salvar Modificações</button>
+        </div>
+      </form>
+    </div>
+
+    <script src="../node_modules/axios/dist/axios.min.js"></script>
+    <script src="./perfil.js"></script>
+    <script src="../login/login_util.js"></script>
+    <script src="../logout/logout.js"></script>
+  </body>
+</html>

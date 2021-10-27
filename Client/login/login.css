@@ -10,6 +10,8 @@ body {
     rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
   width: 450px;
   margin: 70px 25rem;
+  margin-bottom: 30px;
+  padding-top: 10px;
 }
 
 form {
@@ -189,6 +191,25 @@ input[type="radio"] {
 .horizontal .field button,
 .horizontal .field small {
   grid-column: 2 / 3;
+}
+
+/* Auth Actions */
+.actions {
+  margin-left: 26rem;
+}
+
+.auth_actions {
+  color: #f2f2f277;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.auth_actions:hover {
+  color: #164e3a;
+}
+
+#singup {
+  margin-left: 10rem;
 }
 
 /* Utility classes*/

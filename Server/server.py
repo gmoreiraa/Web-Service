@@ -65,6 +65,8 @@ class ServiceHandler(BaseHTTPRequestHandler):
             self.do_create()
         elif self.path == '/login':
             self.do_login()
+        elif self.path == '/new-pass':
+            self.do_check_email()
 
     def do_create(self):
         req = self._get_request_content()
@@ -77,7 +79,7 @@ class ServiceHandler(BaseHTTPRequestHandler):
         with open("db.json", 'w+') as file_data:
             json.dump(data, file_data)
 
-        self.send_response(200)
+        self.send_response(201)
         self._set_headers()
         self.wfile.write(json.dumps(req).encode())
 
@@ -87,14 +89,33 @@ class ServiceHandler(BaseHTTPRequestHandler):
 
         found = False
         for user in range(len(data)):
-            if data[user]["email"] == req["email"] and data[user][
-                    "password"] == req["password"]:
+            if data[user]["email"] == req["email"]:
+                if data[user]["password"] == req["password"]:
+                    self.send_response(201)
+                    self._set_headers()
+                    self.wfile.write(json.dumps(data[user]["id"]).encode())
+                    login.append(data[user]["id"])
+                    with open("login.json", 'w+') as file_data:
+                        json.dump(login, file_data)
+                    found = True
+                break
+
+        if not found:
+            self.send_response(404)
+            self._set_headers()
+            error = "NOT FOUND!"
+            self.wfile.write(bytes(error, 'utf-8'))
+
+    def do_check_email(self):
+        req = self._get_request_content()
+        req = json.loads(req)["data"]
+
+        found = False
+        for user in range(len(data)):
+            if data[user]["email"] == req:
                 self.send_response(200)
                 self._set_headers()
-                self.wfile.write(json.dumps(req).encode())
-                login.append(req)
-                with open("login.json", 'w+') as file_data:
-                    json.dump(login, file_data)
+                self.wfile.write(json.dumps(data[user]).encode())
                 found = True
                 break
 
@@ -107,18 +128,19 @@ class ServiceHandler(BaseHTTPRequestHandler):
 #PUT method Defination
 
     def do_PUT(self):
-        self.send_response(200)
-        self._set_headers()
-        req = self._get_request_content()
-        req = json.loads(req)["data"]
+        if self.path == '/users' or self.path == '/users/':
+            self.send_response(200)
+            self._set_headers()
+            req = self._get_request_content()
+            req = json.loads(req)["data"]
 
-        for user in range(len(data)):
-            if data[user]["id"] == req["id"]:
-                data[user] = req
-                with open("db.json", 'w+') as file_data:
-                    json.dump(data, file_data)
-                self.wfile.write(json.dumps(req).encode())
-                break
+            for user in range(len(data)):
+                if data[user]["id"] == req["id"]:
+                    data[user] = req
+                    with open("db.json", 'w+') as file_data:
+                        json.dump(data, file_data)
+                    self.wfile.write(json.dumps(req).encode())
+                    break
 
 #DELETE method defination
 
@@ -153,7 +175,7 @@ class ServiceHandler(BaseHTTPRequestHandler):
 
         found = False
         for user in range(len(login)):
-            if login[user]["email"] == req:
+            if login[user] == req:
                 self.send_response(200)
                 self._set_headers()
                 self.wfile.write(json.dumps(login[user]).encode())

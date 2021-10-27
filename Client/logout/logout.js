@@ -3,14 +3,14 @@ function logout() {
     .delete("http://localhost:8080/logout", {
       headers: { "Content-type": "application/json" },
       withCredentials: false,
-      data: localStorage.getItem("email"),
+      data: localStorage.getItem("id"),
     })
     .then((response) => {
       console.log(response);
       if (response["status"] == 200) {
         localStorage.setItem("login", "");
-        localStorage.setItem("email", "");
-        document.location.reload(true);
+        localStorage.setItem("id", "");
+        window.location.replace(localStorage.getItem("base_url"));
       }
     })
     .catch((e) => console.log(e));
