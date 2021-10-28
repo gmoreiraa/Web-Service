@@ -19,6 +19,7 @@ form {
   margin: 10px auto;
   padding: 0.5rem 1rem;
   padding-left: -150px;
+  margin-left: 15px !important;
 }
 
 form h1 {
