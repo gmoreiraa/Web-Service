@@ -14,6 +14,7 @@ function renderHTML(data) {
   let list = document.getElementById("users-list");
   data.forEach((user) => {
     list.innerHTML += `<div class="user-card">
+                        <button class="delete" id="delete" onclick="del(${user["id"]})">Apagar</button>
                         <h4 class="user-name">${user["name"]}</h4>
                         <p>RG: ${user["rg"]}</p>
                         <p>Matricula: ${user["matricula"]}</p>

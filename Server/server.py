@@ -72,7 +72,10 @@ class ServiceHandler(BaseHTTPRequestHandler):
         req = self._get_request_content()
         req = json.loads(req)["data"]
 
-        index = int(data[len(data) - 1]["id"]) + 1
+        if len(data) > 0:
+            index = int(data[len(data) - 1]["id"]) + 1
+        else:
+            index = 1
 
         req["id"] = str(index)
         data.append(req)

@@ -7,5 +7,9 @@ Abra o terminal no diretório '/Server' e execute o comando:
     ou
     ➜ python server.py
 
-Verificar se o Server está rodando corretamente:
+Para verificar se o Server está rodando corretamente execute o comando:
     ➜ curl http://localhost:8080/users
+
+OBS.: 
+O arquivo db.json guarda a lista de usuários do sistema
+O login.json guarda o 'id' de usuários que estão logados no sistema
